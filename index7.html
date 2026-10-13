@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>บันทึกรายจ่าย - Farm Expense</title>
+
+    <link rel="stylesheet" href="./styles7.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Navbar ไม่มีขีดเส้นใต้ */
+      .bottom-nav .nav-item,
+      .bottom-nav .nav-item:visited,
+      .bottom-nav .nav-item:hover {
+        text-decoration: none;
+        color: #168b91;
+      }
+
+      .bottom-nav .nav-item {
+        flex: 1;
+        min-width: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        font-family: Mitr, sans-serif;
+        font-size: 9px;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="app-page" style="--accent: #b76c63">
+      <!-- ========== HEADER ========== -->
+      <header class="finance-header">
+        <div class="pond-banner">
+          <!-- ย้อนกลับไป index5 -->
+          <button
+            class="back-link"
+            type="button"
+            onclick="goToPondDashboard()"
+            aria-label="กลับไปหน้าข้อมูลบ่อ"
+          >
+            ❮
+          </button>
+
+          <img src="./Fish.png" alt="ปลา" />
+
+          <strong id="pond-title"> ข้อมูลบ่อปลา </strong>
+        </div>
+
+        <div class="header-meta">
+          <select id="month-picker" aria-label="เลือกเดือน"></select>
+
+          <div class="count-pill" id="fish-count">จำนวนปลา - ตัว</div>
+        </div>
+      </header>
+
+      <!-- ========== CONTENT ========== -->
+      <section class="finance-content">
+        <!-- แท็บรายรับ / รายจ่าย -->
+        <div class="entry-tabs">
+          <a id="income-tab" href="index6.html"> รายรับ </a>
+
+          <a
+            id="expense-tab"
+            href="index7.html"
+            class="active expense-active"
+            aria-current="page"
+          >
+            รายจ่าย
+          </a>
+        </div>
+
+        <!-- ========== EXPENSE FORM ========== -->
+        <form class="entry-form" id="entry-form">
+          <label for="category"> ประเภท </label>
+
+          <input
+            id="category"
+            name="category"
+            list="category-options"
+            placeholder="เช่น ค่าอาหารปลา"
+            required
+            maxlength="100"
+          />
+
+          <datalist id="category-options">
+            <option value="ค่าอาหารปลา"></option>
+            <option value="ค่ายา"></option>
+            <option value="ค่าไฟฟ้า"></option>
+            <option value="ค่าแรง"></option>
+            <option value="ค่าอุปกรณ์"></option>
+            <option value="รายจ่ายอื่น ๆ"></option>
+          </datalist>
+
+          <label for="amount"> จำนวนเงิน (บาท) </label>
+
+          <input
+            id="amount"
+            name="amount"
+            type="number"
+            min="0.01"
+            step="0.01"
+            required
+            placeholder="0.00"
+          />
+
+          <label for="date"> วันที่ </label>
+
+          <input id="date" name="date" type="date" required />
+
+          <label for="details"> รายละเอียด (ถ้ามี) </label>
+
+          <textarea
+            id="details"
+            name="details"
+            maxlength="500"
+            placeholder="รายละเอียดเพิ่มเติม"
+          ></textarea>
+
+          <p id="error" class="error" role="status" aria-live="polite"></p>
+
+          <button class="submit-btn" type="submit">บันทึก</button>
+        </form>
+      </section>
+
+      <!-- ========== NAVBAR ========== -->
+      <nav class="bottom-nav" aria-label="เมนูหลัก">
+        <!-- หน้าหลัก -->
+        <a class="nav-item" href="index2.html">
+          <span class="nav-icon">⌂</span>
+          <span>หน้าหลัก</span>
+        </a>
+
+        <!-- รายการบ่อ -->
+        <a class="nav-item" href="index4.html">
+          <span class="nav-icon">▤</span>
+          <span>รายการบ่อ</span>
+        </a>
+
+        <!-- สรุปผล -->
+        <a class="nav-item" id="nav-summary" href="index8.html">
+          <span class="nav-icon">▥</span>
+          <span>สรุปผล</span>
+        </a>
+
+        <!-- AI -->
+        <a class="nav-item" id="nav-ai" href="index9.html">
+          <span class="nav-icon">◎</span>
+          <span>AI</span>
+        </a>
+      </nav>
+    </main>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script src="./finance.js"></script>
+
+    <script>
+      // ========== สร้างลิงก์พร้อมบ่อและเดือน ==========
+      function pageLink(page) {
+        const params = new URLSearchParams(window.location.search);
+
+        const pondId =
+          params.get("pond") || localStorage.getItem("farmExpenseSelectedPond");
+
+        const picker = document.getElementById("month-picker");
+
+        const month = picker?.value || params.get("month");
+
+        const url = new URL(page + ".html", window.location.href);
+
+        if (pondId) {
+          url.searchParams.set("pond", pondId);
+        }
+
+        if (month) {
+          url.searchParams.set("month", month);
+        }
+
+        return url.href;
+      }
+
+      // ========== ปุ่มย้อนกลับไป INDEX5 ==========
+      function goToPondDashboard() {
+        location.href = pageLink("index5");
+      }
+
+      // ========== เริ่มต้นหน้า ==========
+      if (setup()) {
+        const picker = document.getElementById("month-picker");
+
+        // จำบ่อที่กำลังใช้งาน
+        const currentPondId = new URLSearchParams(location.search).get("pond");
+
+        if (currentPondId) {
+          localStorage.setItem("farmExpenseSelectedPond", currentPondId);
+        }
+
+        // ========== NAVBAR ==========
+        function updateNavigation() {
+          document.getElementById("nav-summary").href = pageLink("index8");
+
+          document.getElementById("nav-ai").href = pageLink("index9");
+
+          document.getElementById("income-tab").href = pageLink("index6");
+
+          document.getElementById("expense-tab").href = pageLink("index7");
+        }
+
+        updateNavigation();
+
+        picker.addEventListener("change", updateNavigation);
+
+        // ========== วันที่เริ่มต้น ==========
+        const now = new Date();
+
+        const today =
+          now.getFullYear() +
+          "-" +
+          String(now.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(now.getDate()).padStart(2, "0");
+
+        const selectedMonth = picker.value;
+
+        document.getElementById("date").value =
+          selectedMonth === today.slice(0, 7) ? today : selectedMonth + "-01";
+
+        // ========== บันทึกรายจ่าย ==========
+        // ใช้ฟังก์ชันเดิมใน finance.js
+        saveEntry("expense");
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,302 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.page-container {
+  position: relative;
+  width: 412px;
+  height: 717px;
+  background-image: url("Backgroud.jpg"); /* ใช้ภาพพื้นหลัง */
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ปรับพื้นหลังให้โปร่งแสง 75% */
+.page-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0); /* พื้นหลังโปร่งแสง 25% */
+  border-radius: 20px;
+  z-index: 1;
+}
+
+.logo {
+  width: 320px;
+  height: 120px;
+  background-image: url("white.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  position: relative;
+  top: -200px;
+  z-index: 2;
+}
+
+@font-face {
+  font-family: "MittraphapRounded";
+  src: url("./FC\ Mittraphap\ Rounded/") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.app-title {
+  font-family: "Mitr", sans-serif;
+  position: absolute;
+  top: 33%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff4cc;
+  z-index: 2;
+}
+
+.app-title h1 {
+  font-size: 23px;
+  font-weight: normal;
+  margin: 0 0 5px 0;
+}
+
+.app-title p {
+  font-size: 20px;
+  font-weight: normal;
+  margin: 0;
+}
+
+/* ===== Start Button ===== */
+.start-button {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 150px;
+    height: 50px;
+
+    background-color: #208f91;
+    color: white;
+    border: none;
+    border-radius: 18px;
+
+    font-family: "Mitr", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+
+    cursor: pointer;
+    z-index: 10;
+
+    /* เพิ่มความนุ่มนวล */
+    transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        box-shadow 0.25s ease;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* เมื่อเอาเมาส์ไปชี้ */
+.start-button:hover {
+    background-color: #28aeb0;
+
+    /* ปุ่มลอยขึ้นและขยายเล็กน้อย */
+    transform: translateX(-50%) translateY(-6px) scale(1.06);
+
+    /* เพิ่มเงา */
+    box-shadow: 0 10px 20px rgba(0, 100, 110, 0.35);
+}
+
+/* เมื่อคลิกปุ่ม */
+.start-button:active {
+    transform: translateX(-50%) translateY(0) scale(0.96);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* รองรับการใช้คีย์บอร์ด */
+.start-button:focus-visible {
+    outline: 3px solid #fff4cc;
+    outline-offset: 4px;
+}
+
+/* ===== Floating Underwater Bubbles ===== */
+
+.page-container {
+  isolation: isolate;
+}
+
+.bubble-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Bubble appearance */
+.bubble {
+  position: absolute;
+  bottom: -60px;
+  display: block;
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle at 30% 25%,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(220, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.06) 60%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.48);
+
+  box-shadow:
+    inset -3px -4px 8px rgba(255, 255, 255, 0.1),
+    0 0 8px rgba(210, 255, 255, 0.12);
+
+  animation: bubble-float linear infinite;
+}
+
+/* Bubble sizes and positions */
+.bubble-1 {
+  width: 50px;
+  height: 50px;
+  left: 62%;
+  animation-duration: 10s;
+  animation-delay: 0s;
+}
+
+.bubble-2 {
+  width: 30px;
+  height: 30px;
+  left: 50%;
+  animation-duration: 14s;
+  animation-delay: 3s;
+}
+
+.bubble-3 {
+  width: 25px;
+  height: 25px;
+  left: 40%;
+  animation-duration: 9s;
+  animation-delay: 1s;
+}
+
+.bubble-4 {
+  width: 25px;
+  height: 25px;
+  left: 45%;
+  animation-duration: 12s;
+  animation-delay: 5s;
+}
+
+.bubble-5 {
+  width: 25px;
+  height: 25px;
+  left: 55%;
+  animation-duration: 16s;
+  animation-delay: 2s;
+}
+
+.bubble-6 {
+  width: 50px;
+  height: 50px;
+  left: 37%;
+  animation-duration: 11s;
+  animation-delay: 4s;
+}
+
+.bubble-7 {
+  width: 45px;
+  height: 45px;
+  left: 35%;
+  animation-duration: 13s;
+  animation-delay: 1s;
+}
+
+.bubble-8 {
+  width: 50px;
+  height: 50px;
+  left: 56%;
+  animation-duration: 8s;
+  animation-delay: 6s;
+}
+
+.bubble-9 {
+  width: 35px;
+  height: 35px;
+  left: 53%;
+  animation-duration: 10s;
+  animation-delay: 7s;
+}
+
+.bubble-10 {
+  width: 40px;
+  height: 40px;
+  left: 50%;
+  animation-duration: 15s;
+  animation-delay: 8s;
+}
+
+.bubble-11 {
+  width: 40px;
+  height: 40px;
+  left: 67%;
+  animation-duration: 12s;
+  animation-delay: 4s;
+}
+
+.bubble-12 {
+  width: 16px;
+  height: 16px;
+  left: 50%;
+  animation-duration: 11s;
+  animation-delay: 6s;
+}
+@keyframes bubble-float {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translate3d(18px, -480px, 0) scale(1);
+    opacity: 0.55;
+  }
+
+  90% {
+    opacity: 0.35;
+  }
+
+  100% {
+    transform: translate3d(-12px, -1000px, 0) scale(1.15);
+    opacity: 0;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .bubble {
+    animation: none;
+    display: none;
+  }
+}
+

@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>รายการบ่อปลา - ฟาร์มของฉัน</title>
+
+    <link rel="stylesheet" href="./styles4.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <main class="app-page list-page">
+      <!-- ========== HEADER ========== -->
+      <header class="list-header">
+        <h1>ฟาร์มของฉัน</h1>
+      </header>
+
+      <!-- ========== POND LIST ========== -->
+      <section class="pond-list-section">
+        <h2>บ่อปลาของฉัน</h2>
+
+        <p id="pond-total" class="pond-total">มีทั้งหมด 0 บ่อ</p>
+
+        <div id="pond-list" class="pond-list" aria-live="polite"></div>
+
+        <!-- ไม่มีข้อมูลบ่อ -->
+        <div id="empty-state" class="empty-state" hidden>
+          <img src="./Fish.png" alt="รูปปลา" class="empty-fish" />
+
+          <p>ยังไม่มีข้อมูลบ่อปลา</p>
+          <p>กดปุ่มด้านล่างเพื่อเพิ่มบ่อแรกของคุณ</p>
+        </div>
+
+        <!-- ปุ่มเพิ่มบ่อ -->
+        <button
+          class="add-pond-button"
+          type="button"
+          onclick="location.href = 'index3.html'"
+        >
+          <span class="plus-bubble" aria-hidden="true">+</span>
+          <span>เพิ่มบ่อและชนิดปลาถัดไป</span>
+        </button>
+      </section>
+
+      <!-- ========== NAVBAR ========== -->
+      <nav class="bottom-nav" aria-label="เมนูหลัก">
+        <button
+          class="nav-item"
+          type="button"
+          onclick="location.href = 'index2.html'"
+        >
+          <span class="nav-icon">⌂</span>
+          <span>หน้าหลัก</span>
+        </button>
+
+        <button
+          class="nav-item active"
+          type="button"
+          onclick="location.href = 'index4.html'"
+          aria-current="page"
+        >
+          <span class="nav-icon">▤</span>
+          <span>รายการบ่อ</span>
+        </button>
+
+        <button class="nav-item" type="button" onclick="openPondPage('index8')">
+          <span class="nav-icon">▥</span>
+          <span>สรุปผล</span>
+        </button>
+
+        <button class="nav-item" type="button" onclick="openPondPage('index9')">
+          <span class="nav-icon">◎</span>
+          <span>AI</span>
+        </button>
+      </nav>
+    </main>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+      const POND_KEY = "farmExpensePonds";
+      const TX_KEY = "farmExpenseTransactions";
+      const SELECTED_KEY = "farmExpenseSelectedPond";
+
+      // ========== อ่านข้อมูลจาก localStorage ==========
+      function readArray(key) {
+        try {
+          const data = JSON.parse(localStorage.getItem(key) || "[]");
+
+          return Array.isArray(data) ? data : [];
+        } catch (error) {
+          console.error("อ่านข้อมูลไม่สำเร็จ:", key, error);
+          return [];
+        }
+      }
+
+      function loadPonds() {
+        return readArray(POND_KEY);
+      }
+
+      function pondIdOf(pond) {
+        return String(pond.id ?? pond.pondNumber);
+      }
+
+      // ========== จำบ่อที่เลือก ==========
+      function rememberPond(pond) {
+        localStorage.setItem(SELECTED_KEY, pondIdOf(pond));
+      }
+
+      // ========== เปิดหน้าข้อมูลบ่อ ==========
+      function openPond(pond) {
+        rememberPond(pond);
+
+        const url = new URL("index5.html", location.href);
+
+        url.searchParams.set("pond", pondIdOf(pond));
+
+        location.href = url.href;
+      }
+
+      // ========== เปิดหน้าสรุปผล / AI ==========
+      function openPondPage(page) {
+        const ponds = loadPonds();
+
+        if (ponds.length === 0) {
+          alert("กรุณาเพิ่มข้อมูลบ่อปลาก่อนใช้งาน");
+          location.href = "index3.html";
+          return;
+        }
+
+        const savedId = localStorage.getItem(SELECTED_KEY);
+
+        const selectedPond =
+          ponds.find((pond) => pondIdOf(pond) === savedId) || ponds[0];
+
+        rememberPond(selectedPond);
+
+        const now = new Date();
+
+        const month =
+          now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0");
+
+        const url = new URL(page + ".html", location.href);
+
+        url.searchParams.set("pond", pondIdOf(selectedPond));
+
+        url.searchParams.set("month", month);
+
+        location.href = url.href;
+      }
+
+      // ========== แสดงรายการบ่อ ==========
+      function renderPonds() {
+        const ponds = loadPonds()
+          .slice()
+          .sort((a, b) => Number(a.pondNumber) - Number(b.pondNumber));
+
+        const list = document.getElementById("pond-list");
+
+        const empty = document.getElementById("empty-state");
+
+        const total = document.getElementById("pond-total");
+
+        list.replaceChildren();
+
+        total.textContent = `มีทั้งหมด ${ponds.length} บ่อ`;
+
+        empty.hidden = ponds.length !== 0;
+
+        ponds.forEach((pond) => {
+          // ========== CARD ==========
+          const card = document.createElement("article");
+
+          card.className = "pond-card";
+          card.style.cursor = "pointer";
+
+          card.setAttribute("role", "link");
+          card.setAttribute("tabindex", "0");
+
+          card.setAttribute(
+            "aria-label",
+            `เปิดข้อมูลบ่อที่ ${pond.pondNumber}`,
+          );
+
+          card.addEventListener("click", () => openPond(pond));
+
+          card.addEventListener("keydown", (event) => {
+            if (
+              event.target === card &&
+              (event.key === "Enter" || event.key === " ")
+            ) {
+              event.preventDefault();
+              openPond(pond);
+            }
+          });
+
+          // ========== FISH IMAGE ==========
+          const icon = document.createElement("div");
+
+          icon.className = "fish-icon";
+          icon.setAttribute("aria-hidden", "true");
+
+          const image = document.createElement("img");
+
+          image.src = "./Fish.png";
+          image.alt = "";
+          image.className = "fish-image";
+
+          icon.appendChild(image);
+
+          // ========== POND DETAILS ==========
+          const details = document.createElement("div");
+
+          details.className = "pond-details";
+
+          const title = document.createElement("h3");
+
+          title.textContent = `บ่อที่ ${pond.pondNumber} : ${pond.fishSpecies}`;
+
+          const count = document.createElement("p");
+
+          count.textContent = `จำนวนปลา ${Number(pond.fishCount).toLocaleString(
+            "th-TH",
+          )} ตัว`;
+
+          details.append(title, count);
+
+          // ========== ACTION BUTTONS ==========
+          const actions = document.createElement("div");
+
+          actions.className = "pond-actions";
+
+          // ปุ่มแก้ไข
+          const edit = document.createElement("button");
+
+          edit.type = "button";
+          edit.className = "edit-button";
+          edit.textContent = "แก้ไข";
+
+          edit.setAttribute("aria-label", `แก้ไขบ่อที่ ${pond.pondNumber}`);
+
+          edit.addEventListener("click", (event) => {
+            event.stopPropagation();
+
+            const index = loadPonds().findIndex(
+              (item) => pondIdOf(item) === pondIdOf(pond),
+            );
+
+            if (index < 0) {
+              alert("ไม่พบข้อมูลบ่อที่ต้องการแก้ไข");
+              return;
+            }
+
+            location.href = `index3.html?edit=${index}`;
+          });
+
+          // ปุ่มลบ
+          const del = document.createElement("button");
+
+          del.type = "button";
+          del.className = "delete-button";
+          del.textContent = "ลบ";
+
+          del.setAttribute("aria-label", `ลบบ่อที่ ${pond.pondNumber}`);
+
+          del.addEventListener("click", (event) => {
+            event.stopPropagation();
+
+            const confirmed = confirm(
+              `ต้องการลบบ่อที่ ${pond.pondNumber} (${pond.fishSpecies}) ใช่หรือไม่?\n\nข้อมูลรายรับ–รายจ่ายของบ่อนี้จะถูกลบด้วย และไม่สามารถกู้คืนได้`,
+            );
+
+            if (!confirmed) return;
+
+            const current = loadPonds();
+
+            const id = pondIdOf(pond);
+
+            const updatedPonds = current.filter(
+              (item) => pondIdOf(item) !== id,
+            );
+
+            const updatedTxs = readArray(TX_KEY).filter(
+              (tx) => String(tx.pondId) !== id,
+            );
+
+            try {
+              localStorage.setItem(POND_KEY, JSON.stringify(updatedPonds));
+
+              localStorage.setItem(TX_KEY, JSON.stringify(updatedTxs));
+
+              // หากลบบ่อที่เลือกล่าสุด
+              if (localStorage.getItem(SELECTED_KEY) === id) {
+                if (updatedPonds.length > 0) {
+                  rememberPond(updatedPonds[0]);
+                } else {
+                  localStorage.removeItem(SELECTED_KEY);
+                }
+              }
+
+              renderPonds();
+            } catch (error) {
+              alert("ลบข้อมูลไม่สำเร็จ กรุณาลองอีกครั้ง");
+            }
+          });
+
+          actions.append(edit, del);
+
+          // รวมการ์ด
+          card.append(icon, details, actions);
+
+          list.appendChild(card);
+        });
+      }
+
+      // ========== INITIALIZE ==========
+      renderPonds();
+    </script>
+  </body>
+</html>

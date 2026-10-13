@@ -1,0 +1,333 @@
+/* ===== General ===== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Mitr", sans-serif;
+  color: #111;
+  background: #f0f0f0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+/* ===== App Page: 412 x 717 ===== */
+.app-page {
+  position: relative;
+  width: 412px;
+  height: 717px;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 20px;
+
+  background: #dff7f7 url("./Backgroud2.jpg")
+    center / 100% 100% no-repeat;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== Header ===== */
+.page-header {
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #edae43;
+  font-size: clamp(30px, 8vw, 40px);
+  line-height: 1.2;
+  font-weight: 600;
+  -webkit-text-stroke: 1.5px #27636a;
+  paint-order: stroke fill;
+  text-shadow: 1px 2px 0 rgba(5, 5, 5, 0.8);
+}
+
+/* ===== Form Area ===== */
+.pond-form {
+  position: absolute;
+  top: 200px;
+  left: 0;
+  right: 0;
+  bottom: 72px;
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+
+  padding: 8px 8% 12px;
+}
+
+.pond-form::-webkit-scrollbar {
+  display: none;
+}
+
+.form-field {
+  margin-bottom: 12px;
+}
+
+.form-field label {
+  display: block;
+  margin: 0 0 5px 7px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.form-field input {
+  display: block;
+  width: 100%;
+  height: 45px;
+  padding: 8px 14px;
+
+  border: 0;
+  outline: none;
+  border-radius: 19px;
+
+  background: #4cbcc1;
+  color: #fff;
+  font-size: 17px;
+
+  box-shadow: 0 5px 9px rgba(0, 0, 0, 0.14);
+}
+
+.form-field input::placeholder {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.form-field input:focus {
+  box-shadow:
+    0 0 0 2px #f4d78e,
+    0 5px 9px rgba(0, 0, 0, 0.14);
+}
+
+.form-message {
+  min-height: 0;
+  margin: 0 0 5px;
+  color: #a43131;
+  font-size: 12px;
+}
+
+/* ===== Save Button ===== */
+.save-button {
+  display: block;
+  width: 50%;
+  min-height: 50px;
+  margin: 40px auto 8px;
+  padding: 6px 10px;
+  
+  border: 2px solid #168b91;
+  border-radius: 18px;
+
+  background: #4cbcc1;
+  color: white;
+  font-size: 21px;
+  font-weight: 500;
+
+  box-shadow: 0 5px 9px rgba(0, 0, 0, 0.14);
+}
+
+.save-button:active {
+  transform: scale(0.98);
+}
+
+.back-button {
+  display: block;
+  margin: 0 auto;
+  padding: 5px 10px;
+  border: 0;
+  background: transparent;
+  color: #087f83;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+/* ===== Bottom Navigation ===== */
+.bottom-nav {
+  position: absolute;
+  z-index: 5;
+
+  left: 16px;
+  right: 16px;
+  bottom: 6px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2px;
+
+  padding: 3px 6px;
+  border: 1.5px solid #578d8d;
+  border-radius: 17px;
+
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(5px);
+}
+
+.nav-item {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+
+  border: none;
+  background: transparent;
+  color: #168b91;
+
+  font-size: 9px;
+  line-height: 1.2;
+}
+
+.nav-icon {
+  width: 29px;
+  height: 29px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: #fbf1c5;
+
+  font-size: 22px;
+  line-height: 1;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-item.active .nav-icon {
+  background: #f8e9a9;
+}
+
+.nav-item:active {
+  transform: scale(0.96);
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 412px) {
+  .app-page {
+    width: 100%;
+    max-width: 412px;
+    height: 100vh;
+    height: 100dvh;
+    border-radius: 0;
+  }
+
+  .welcome-header {
+    height: 155px;
+  }
+
+  .welcome-small {
+    font-size: clamp(20px, 6vw, 25px);
+  }
+
+  .welcome-heading h1 {
+    font-size: clamp(30px, 9vw, 39px);
+  }
+
+  .welcome-content {
+    top: 155px;
+    bottom: 70px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .intro-box {
+    font-size: clamp(11px, 3vw, 12px);
+  }
+
+  .farmer-image {
+    height: clamp(145px, 27vh, 190px);
+  }
+
+  .bottom-nav {
+    left: 16px;
+    right: 16px;
+    bottom: 6px;
+    height: 58px;
+  }
+}
+
+/* ===== Short Screens ===== */
+@media (max-height: 650px) {
+  .welcome-content {
+    bottom: 65px;
+    gap: 5px;
+    padding-top: 5px;
+  }
+
+  .farmer-image {
+    height: 120px;
+  }
+
+  .intro-box {
+    padding: 6px;
+    line-height: 1.5;
+  }
+
+  .bottom-nav {
+    height: 52px;
+  }
+
+  .nav-icon {
+    width: 25px;
+    height: 25px;
+    font-size: 19px;
+  }
+}
+/* ===== Mouse Cursor ===== */
+
+button,
+.save-button,
+.back-button,
+.nav-item {
+    cursor: pointer;
+}
+
+input {
+    cursor: text;
+}
+
+.save-button:hover {
+    background: #39aeb4;
+    transform: scale(1.03);
+    transition: 0.2s;
+}
+
+.back-button:hover {
+    color: #045e62;
+    text-decoration: underline;
+}
+
+.nav-item:hover .nav-icon {
+    background: #f5e4a0;
+    transform: scale(1.08);
+    transition: 0.2s;
+}
+
+button:active {
+    transform: scale(0.97);
+}

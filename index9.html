@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>AI วิเคราะห์ - Farm Expense</title>
+    <link rel="stylesheet" href="./styles9.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="app-page">
+      <header class="page-head"><h1>AI วิเคราะห์</h1></header>
+      <section class="scroll-content">
+        <div class="filters">
+          <select id="month-picker" aria-label="เลือกเดือน"></select>
+          <select id="pond-picker" aria-label="เลือกบ่อปลา"></select>
+        </div>
+        <div class="ai-hello">
+          <div class="ai-mascot" aria-hidden="true">🦀</div>
+          <div class="bubble">
+            สวัสดีครับ นี่คือผลวิเคราะห์ฟาร์มของคุณ<strong id="welcome-month"
+              >ประจำเดือน</strong
+            ><span id="pond-title">ข้อมูลทุกบ่อรวมกัน</span>
+          </div>
+        </div>
+        <div class="profit-card" id="profit-card">
+          <div>
+            กำไร / ขาดทุน<strong id="profit">0 บาท</strong
+            ><small id="income-expense">รายรับ 0 • รายจ่าย 0 บาท</small>
+          </div>
+          <div class="change">
+            เทียบกับเดือนก่อน<strong id="change">—</strong>
+          </div>
+        </div>
+        <div class="panel">
+          <h2>วิเคราะห์ค่าใช้จ่าย</h2>
+          <div class="insight">
+            <div
+              class="donut"
+              id="expense-donut"
+              role="img"
+              aria-label="สัดส่วนค่าใช้จ่าย"
+            ></div>
+            <div id="category-list" class="category-list"></div>
+          </div>
+        </div>
+        <div class="panel recommendation">
+          <h2>คำแนะนำจาก AI</h2>
+          <p id="recommendation">กำลังวิเคราะห์ข้อมูล...</p>
+        </div>
+        <div class="panel chat-panel">
+          <h2>ถาม AI เกี่ยวกับฟาร์ม</h2>
+          <div id="chat-messages" class="chat-messages" aria-live="polite">
+            <div class="message assistant">
+              ถามได้เลย เช่น บ่อไหนกำไรมากที่สุด หรือควรลดต้นทุนอะไร?
+            </div>
+          </div>
+          <form class="chat" id="chat-form">
+            <input
+              id="chat-input"
+              maxlength="1500"
+              placeholder="พิมพ์คำถามเพิ่มเติม ..."
+              aria-label="คำถามถึง AI"
+              required
+            />
+            <button id="send-button" type="submit" aria-label="ส่งคำถาม">
+              ➤
+            </button>
+          </form>
+          <p class="muted" id="chat-status" role="status"></p>
+        </div>
+      </section>
+      <nav class="bottom-nav" aria-label="เมนูหลัก">
+        <a class="nav-item" href="index2.html"
+          ><span class="nav-icon">⌂</span><span>หน้าหลัก</span></a
+        >
+        <a class="nav-item" href="index4.html"
+          ><span class="nav-icon">▤</span><span>รายการบ่อ</span></a
+        >
+        <a class="nav-item" id="nav-summary" href="index8.html"
+          ><span class="nav-icon">▥</span><span>สรุปผล</span></a
+        >
+        <a
+          class="nav-item active"
+          id="nav-ai"
+          href="index9.html"
+          aria-current="page"
+          ><span class="nav-icon">◎</span><span>AI</span></a
+        >
+      </nav>
+    </main>
+    <script src="./ai.js"></script>
+  </body>
+</html>

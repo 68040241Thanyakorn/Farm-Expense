@@ -1,0 +1,70 @@
+<!-- Replace only the existing <script>...</script> block at the bottom of index3.html with this: -->
+<script>
+  const STORAGE_KEY = "farmExpensePonds";
+  function readPonds() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      return Array.isArray(value) ? value : [];
+    } catch { return []; }
+  }
+  const params = new URLSearchParams(location.search);
+  const editParam = params.get("edit");
+  const editIndex = editParam !== null && /^\d+$/.test(editParam) ? Number(editParam) : -1;
+  const existingPonds = readPonds();
+  const editing = editIndex >= 0 && editIndex < existingPonds.length;
+  if (editing) {
+    const pond = existingPonds[editIndex];
+    document.getElementById("pond-number").value = pond.pondNumber;
+    document.getElementById("fish-species").value = pond.fishSpecies;
+    document.getElementById("fish-count").value = pond.fishCount;
+    document.querySelector(".save-button").textContent = "บันทึกการแก้ไข";
+  } else {
+    const nextNumber = existingPonds.reduce((max, pond) => {
+      const n = Number(pond.pondNumber);
+      return Number.isFinite(n) ? Math.max(max, n) : max;
+    }, 0) + 1;
+    document.getElementById("pond-number").value = nextNumber;
+  }
+  document.getElementById("pond-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const pondNumber = Number(document.getElementById("pond-number").value);
+    const fishSpecies = document.getElementById("fish-species").value.trim();
+    const fishCount = Number(document.getElementById("fish-count").value);
+    const message = document.getElementById("form-message");
+    if (!Number.isInteger(pondNumber) || pondNumber < 1) {
+      message.textContent = "กรุณากรอกหมายเลขบ่อเป็นจำนวนเต็มตั้งแต่ 1 ขึ้นไป";
+      return;
+    }
+    if (!fishSpecies) { message.textContent = "กรุณากรอกชนิดปลา"; return; }
+    if (!Number.isInteger(fishCount) || fishCount < 1) {
+      message.textContent = "กรุณากรอกจำนวนปลาเป็นจำนวนเต็มตั้งแต่ 1 ขึ้นไป";
+      return;
+    }
+    const ponds = readPonds();
+    if (editing && editIndex >= ponds.length) {
+      message.textContent = "ไม่พบข้อมูลบ่อเดิม กรุณากลับไปหน้ารายการบ่อ";
+      return;
+    }
+    const duplicate = ponds.some((pond, index) =>
+      Number(pond.pondNumber) === pondNumber && (!editing || index !== editIndex));
+    if (duplicate) {
+      message.textContent = "มีหมายเลขบ่อนี้แล้ว กรุณาใช้หมายเลขอื่น";
+      return;
+    }
+    if (editing) {
+      ponds[editIndex] = { ...ponds[editIndex], pondNumber, fishSpecies, fishCount,
+        updatedAt: new Date().toISOString() };
+    } else {
+      ponds.push({
+        id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()),
+        pondNumber, fishSpecies, fishCount, createdAt: new Date().toISOString()
+      });
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(ponds));
+      location.href = "index4.html";
+    } catch {
+      message.textContent = "บันทึกไม่สำเร็จ กรุณาตรวจสอบพื้นที่จัดเก็บข้อมูล";
+    }
+  });
+</script>

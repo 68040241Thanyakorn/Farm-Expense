@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>เพิ่มข้อมูลบ่อปลา - ฟาร์มของฉัน</title>
+
+    <link rel="stylesheet" href="./styles3.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <main class="app-page form-page">
+      <!-- ========== HEADER ========== -->
+      <header class="page-header">
+        <h1>ฟาร์มของฉัน</h1>
+      </header>
+
+      <!-- ========== FORM ========== -->
+      <form id="pond-form" class="pond-form">
+        <div class="form-field">
+          <label for="pond-number">บ่อ (ที่)</label>
+
+          <input
+            id="pond-number"
+            name="pondNumber"
+            type="number"
+            min="1"
+            step="1"
+            required
+            placeholder="เช่น 1"
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="fish-species">ชนิดปลา (พันธุ์)</label>
+
+          <input
+            id="fish-species"
+            name="fishSpecies"
+            type="text"
+            maxlength="60"
+            required
+            placeholder="เช่น ปลานิล"
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="fish-count">จำนวน (ตัว)</label>
+
+          <input
+            id="fish-count"
+            name="fishCount"
+            type="number"
+            min="1"
+            step="1"
+            required
+            placeholder="เช่น 1000"
+          />
+        </div>
+
+        <p
+          id="form-message"
+          class="form-message"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <button class="save-button" id="save-button" type="submit">
+          บันทึก
+        </button>
+
+        <button
+          class="back-button"
+          type="button"
+          onclick="location.href = 'index4.html'"
+        >
+          กลับไปหน้ารายการบ่อ
+        </button>
+      </form>
+
+      <!-- ========== NAVBAR ========== -->
+      <nav class="bottom-nav" aria-label="เมนูหลัก">
+        <button
+          class="nav-item"
+          type="button"
+          onclick="location.href = 'index2.html'"
+        >
+          <span class="nav-icon">⌂</span>
+          <span>หน้าหลัก</span>
+        </button>
+
+        <button
+          class="nav-item active"
+          type="button"
+          onclick="location.href = 'index4.html'"
+        >
+          <span class="nav-icon">▤</span>
+          <span>รายการบ่อ</span>
+        </button>
+
+        <button class="nav-item" type="button" onclick="openPondPage('index8')">
+          <span class="nav-icon">▥</span>
+          <span>สรุปผล</span>
+        </button>
+
+        <button class="nav-item" type="button" onclick="openPondPage('index9')">
+          <span class="nav-icon">◎</span>
+          <span>AI</span>
+        </button>
+      </nav>
+    </main>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+      const STORAGE_KEY = "farmExpensePonds";
+      const SELECTED_KEY = "farmExpenseSelectedPond";
+
+      const params = new URLSearchParams(window.location.search);
+      const editParam = params.get("edit");
+
+      const pondNumberInput = document.getElementById("pond-number");
+
+      const fishSpeciesInput = document.getElementById("fish-species");
+
+      const fishCountInput = document.getElementById("fish-count");
+
+      const message = document.getElementById("form-message");
+
+      const saveButton = document.getElementById("save-button");
+
+      // ========== อ่านข้อมูลบ่อปลา ==========
+      function readPonds() {
+        try {
+          const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+          return Array.isArray(value) ? value : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      // ========== สร้างรหัสบ่อ ==========
+      function createPondId() {
+        if (window.crypto && typeof window.crypto.randomUUID === "function") {
+          return window.crypto.randomUUID();
+        }
+
+        return (
+          "pond-" + Date.now() + "-" + Math.random().toString(36).slice(2, 10)
+        );
+      }
+
+      // ========== เตรียมข้อมูลเพิ่ม / แก้ไขบ่อ ==========
+      const existingPonds = readPonds();
+
+      const editIndex =
+        editParam !== null && /^\d+$/.test(editParam) ? Number(editParam) : -1;
+
+      const isEditMode = editIndex >= 0 && editIndex < existingPonds.length;
+
+      if (editParam !== null && !isEditMode) {
+        alert("ไม่พบข้อมูลบ่อที่ต้องการแก้ไข");
+        location.replace("index4.html");
+      }
+
+      if (isEditMode) {
+        // แก้ไขบ่อเดิม
+        const pond = existingPonds[editIndex];
+
+        pondNumberInput.value = pond.pondNumber;
+        fishSpeciesInput.value = pond.fishSpecies;
+        fishCountInput.value = pond.fishCount;
+
+        saveButton.textContent = "บันทึกการแก้ไข";
+
+        document.title = "แก้ไขข้อมูลบ่อปลา - ฟาร์มของฉัน";
+      } else {
+        // เพิ่มบ่อใหม่
+        const nextNumber =
+          existingPonds.reduce((max, pond) => {
+            const number = Number(pond.pondNumber);
+
+            return Number.isFinite(number) ? Math.max(max, number) : max;
+          }, 0) + 1;
+
+        pondNumberInput.value = nextNumber;
+      }
+
+      // ========== บันทึกข้อมูล ==========
+      document
+        .getElementById("pond-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          message.textContent = "";
+
+          const pondNumber = Number(pondNumberInput.value);
+
+          const fishSpecies = fishSpeciesInput.value.trim();
+
+          const fishCount = Number(fishCountInput.value);
+
+          // ตรวจสอบหมายเลขบ่อ
+          if (!Number.isInteger(pondNumber) || pondNumber < 1) {
+            message.textContent =
+              "กรุณากรอกหมายเลขบ่อเป็นจำนวนเต็มตั้งแต่ 1 ขึ้นไป";
+            return;
+          }
+
+          // ตรวจสอบชนิดปลา
+          if (!fishSpecies) {
+            message.textContent = "กรุณากรอกชนิดปลา";
+            return;
+          }
+
+          // ตรวจสอบจำนวนปลา
+          if (!Number.isInteger(fishCount) || fishCount < 1) {
+            message.textContent =
+              "กรุณากรอกจำนวนปลาเป็นจำนวนเต็มตั้งแต่ 1 ขึ้นไป";
+            return;
+          }
+
+          const ponds = readPonds();
+
+          // ตรวจสอบหมายเลขบ่อซ้ำ
+          const duplicate = ponds.some(
+            (pond, index) =>
+              Number(pond.pondNumber) === pondNumber && index !== editIndex,
+          );
+
+          if (duplicate) {
+            message.textContent = "มีหมายเลขบ่อนี้แล้ว กรุณาใช้หมายเลขอื่น";
+            return;
+          }
+
+          let savedPondId;
+
+          if (isEditMode) {
+            // แก้ไขข้อมูลเดิม โดยรักษา ID เดิม
+            const oldPond = ponds[editIndex];
+
+            if (!oldPond) {
+              message.textContent = "ไม่พบข้อมูลบ่อที่ต้องการแก้ไข";
+              return;
+            }
+
+            savedPondId = oldPond.id ?? oldPond.pondNumber;
+
+            ponds[editIndex] = {
+              ...oldPond,
+              pondNumber,
+              fishSpecies,
+              fishCount,
+              updatedAt: new Date().toISOString(),
+            };
+          } else {
+            // เพิ่มบ่อใหม่
+            savedPondId = createPondId();
+
+            ponds.push({
+              id: savedPondId,
+              pondNumber,
+              fishSpecies,
+              fishCount,
+              createdAt: new Date().toISOString(),
+            });
+          }
+
+          // บันทึกลง localStorage
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(ponds));
+
+            // จำบ่อที่เพิ่มหรือแก้ไขล่าสุด
+            localStorage.setItem(SELECTED_KEY, String(savedPondId));
+
+            location.href = "index4.html";
+          } catch (error) {
+            message.textContent =
+              "บันทึกไม่สำเร็จ พื้นที่จัดเก็บอาจเต็มหรือเบราว์เซอร์บล็อกการจัดเก็บ";
+          }
+        });
+
+      // ========== เปิดหน้าสรุปผล / AI ==========
+      function openPondPage(page) {
+        const ponds = readPonds();
+
+        if (ponds.length === 0) {
+          alert("กรุณาเพิ่มข้อมูลบ่อปลาก่อนใช้งาน");
+          return;
+        }
+
+        const savedId = localStorage.getItem(SELECTED_KEY);
+
+        // เลือกบ่อที่บันทึกล่าสุด
+        const selectedPond =
+          ponds.find(
+            (pond) => String(pond.id ?? pond.pondNumber) === String(savedId),
+          ) || ponds[0];
+
+        const pondId = selectedPond.id ?? selectedPond.pondNumber;
+
+        localStorage.setItem(SELECTED_KEY, String(pondId));
+
+        // เดือนปัจจุบัน
+        const now = new Date();
+
+        const month =
+          now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0");
+
+        // เปิด index8 หรือ index9
+        const url = new URL(page + ".html", window.location.href);
+
+        url.searchParams.set("pond", pondId);
+        url.searchParams.set("month", month);
+
+        location.href = url.href;
+      }
+    </script>
+  </body>
+</html>
