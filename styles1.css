@@ -1,156 +1,219 @@
+/* =====================================
+   FARM EXPENSE - PAGE 1
+   Mobile Screen: Max Width 412px
+   Responsive iPhone / Android / Desktop
+===================================== */
+
+/* ===== RESET ===== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f0f0f0;
+  align-items: stretch;
+
+  font-family: "Mitr", sans-serif;
+  background: #dff7f7;
+
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
 }
+
+/* ===== MAIN APP SCREEN ===== */
 
 .page-container {
   position: relative;
-  width: 412px;
-  height: 717px;
-  background-image: url("Backgroud.jpg"); /* ใช้ภาพพื้นหลัง */
+  isolation: isolate;
+
+  width: 100%;
+  max-width: 412px;
+
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+
+  margin: 0 auto;
+  padding: 0;
+
+  background-image: url("./Backgroud.jpg");
   background-size: cover;
   background-position: center;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  background-repeat: no-repeat;
+  background-color: #dff7f7;
+
+  border-radius: 0;
+  box-shadow: none;
+
+  overflow: hidden;
 }
 
-/* ปรับพื้นหลังให้โปร่งแสง 75% */
+/* ===== BACKGROUND OVERLAY ===== */
+
 .page-container::after {
   content: "";
+
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0); /* พื้นหลังโปร่งแสง 25% */
-  border-radius: 20px;
+  inset: 0;
+
+  background: rgba(255, 255, 255, 0);
+
   z-index: 1;
+  pointer-events: none;
 }
+
+/* ===== LOGO ===== */
 
 .logo {
-  width: 320px;
-  height: 120px;
-  background-image: url("white.png");
+  position: absolute;
+
+  top: 10%;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: min(82%, 320px);
+  height: clamp(95px, 15dvh, 120px);
+
+  background-image: url("./white.png");
   background-size: contain;
-  background-repeat: no-repeat;
   background-position: center;
+  background-repeat: no-repeat;
 
-  position: relative;
-  top: -200px;
-  z-index: 2;
+  z-index: 3;
 }
 
-@font-face {
-  font-family: "MittraphapRounded";
-  src: url("./FC\ Mittraphap\ Rounded/") format("opentype");
-  font-weight: normal;
-  font-style: normal;
-}
+/* ===== APP TITLE ===== */
 
 .app-title {
-  font-family: "Mitr", sans-serif;
   position: absolute;
+
   top: 33%;
   left: 0;
+
   width: 100%;
+  padding: 0 16px;
+
+  font-family: "Mitr", sans-serif;
   text-align: center;
+
   color: #fff4cc;
-  z-index: 2;
+  z-index: 3;
 }
 
 .app-title h1 {
-  font-size: 23px;
-  font-weight: normal;
-  margin: 0 0 5px 0;
+  margin: 0 0 5px;
+
+  font-size: clamp(21px, 5.6vw, 23px);
+  font-weight: 400;
+  line-height: 1.4;
 }
 
 .app-title p {
-  font-size: 20px;
-  font-weight: normal;
   margin: 0;
+
+  font-size: clamp(16px, 4.8vw, 20px);
+  font-weight: 400;
+  line-height: 1.5;
 }
 
-/* ===== Start Button ===== */
+/* ===== START BUTTON ===== */
+
 .start-button {
-    position: absolute;
-    top: 80%;
-    left: 50%;
-    transform: translateX(-50%);
+  position: absolute;
 
-    width: 150px;
-    height: 50px;
+  left: 50%;
+  bottom: calc(max(12%, 30px) + env(safe-area-inset-bottom));
 
-    background-color: #208f91;
-    color: white;
-    border: none;
-    border-radius: 18px;
+  transform: translateX(-50%);
 
-    font-family: "Mitr", sans-serif;
-    font-size: 20px;
-    font-weight: 400;
+  width: 150px;
+  min-height: 50px;
 
-    cursor: pointer;
-    z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    /* เพิ่มความนุ่มนวล */
-    transition:
-        transform 0.25s ease,
-        background-color 0.25s ease,
-        box-shadow 0.25s ease;
+  padding: 8px 12px;
 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: #208f91;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 18px;
+
+  font-family: "Mitr", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+
+  cursor: pointer;
+  touch-action: manipulation;
+
+  z-index: 10;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-/* เมื่อเอาเมาส์ไปชี้ */
 .start-button:hover {
-    background-color: #28aeb0;
+  background-color: #28aeb0;
 
-    /* ปุ่มลอยขึ้นและขยายเล็กน้อย */
-    transform: translateX(-50%) translateY(-6px) scale(1.06);
+  transform: translateX(-50%) translateY(-6px) scale(1.06);
 
-    /* เพิ่มเงา */
-    box-shadow: 0 10px 20px rgba(0, 100, 110, 0.35);
+  box-shadow: 0 10px 20px rgba(0, 100, 110, 0.35);
 }
 
-/* เมื่อคลิกปุ่ม */
 .start-button:active {
-    transform: translateX(-50%) translateY(0) scale(0.96);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  transform: translateX(-50%) scale(0.96);
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
-/* รองรับการใช้คีย์บอร์ด */
 .start-button:focus-visible {
-    outline: 3px solid #fff4cc;
-    outline-offset: 4px;
+  outline: 3px solid #fff4cc;
+  outline-offset: 4px;
 }
 
-/* ===== Floating Underwater Bubbles ===== */
-
-.page-container {
-  isolation: isolate;
-}
+/* ===== BUBBLE CONTAINER ===== */
 
 .bubble-container {
   position: absolute;
   inset: 0;
+
   overflow: hidden;
-  border-radius: 20px;
+
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
-/* Bubble appearance */
+/* ===== BUBBLE STYLE ===== */
+
 .bubble {
   position: absolute;
+
   bottom: -60px;
+
   display: block;
   border-radius: 50%;
 
@@ -171,7 +234,8 @@ body {
   animation: bubble-float linear infinite;
 }
 
-/* Bubble sizes and positions */
+/* ===== BUBBLE POSITIONS ===== */
+
 .bubble-1 {
   width: 50px;
   height: 50px;
@@ -267,6 +331,9 @@ body {
   animation-duration: 11s;
   animation-delay: 6s;
 }
+
+/* ===== BUBBLE ANIMATION ===== */
+
 @keyframes bubble-float {
   0% {
     transform: translate3d(0, 0, 0) scale(0.8);
@@ -292,11 +359,102 @@ body {
   }
 }
 
-/* Respect reduced-motion preferences */
+/* ===== SAFE AREA ===== */
+
+@supports (padding: env(safe-area-inset-top)) {
+  .logo {
+    top: calc(10% + env(safe-area-inset-top));
+  }
+}
+
+/* ===== DESKTOP PREVIEW ===== */
+
+@media (min-width: 600px) {
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .page-container {
+    width: 412px;
+
+    height: min(850px, 100dvh);
+
+    border-radius: 20px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
+
+  .app-title h1 {
+    font-size: 23px;
+  }
+
+  .app-title p {
+    font-size: 20px;
+  }
+}
+
+/* ===== SMALL PHONES ===== */
+
+@media (max-width: 375px) {
+  .logo {
+    width: 80%;
+    height: 105px;
+  }
+
+  .app-title h1 {
+    font-size: 21px;
+  }
+
+  .app-title p {
+    font-size: 17px;
+  }
+
+  .start-button {
+    width: 145px;
+    min-height: 48px;
+    font-size: 18px;
+  }
+}
+
+/* ===== SHORT SCREENS ===== */
+
+@media (max-height: 650px) {
+  .logo {
+    top: 7%;
+    height: 85px;
+  }
+
+  .app-title {
+    top: 30%;
+  }
+
+  .app-title h1 {
+    font-size: 20px;
+  }
+
+  .app-title p {
+    font-size: 16px;
+  }
+
+  .start-button {
+    bottom: calc(8% + env(safe-area-inset-bottom));
+
+    min-height: 45px;
+    font-size: 17px;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+
 @media (prefers-reduced-motion: reduce) {
   .bubble {
     animation: none;
     display: none;
   }
-}
 
+  .start-button {
+    transition: none;
+  }
+}

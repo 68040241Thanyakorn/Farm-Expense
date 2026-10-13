@@ -1,4 +1,3 @@
-/* ===== General ===== */
 * {
   box-sizing: border-box;
 }
@@ -7,31 +6,41 @@ html,
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
   min-height: 100%;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   font-family: "Mitr", sans-serif;
   color: #087f83;
-  background: #f0f0f0;
+  background: #dff7f7;
   -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
 }
 
 button {
   font-family: inherit;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
-/* ===== App Frame ===== */
 .app-page {
   position: relative;
-  width: 412px;
-  height: 717px;
-  max-width: 100%;
+  isolation: isolate;
+  width: 100%;
+  max-width: 412px;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
   margin: 0 auto;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 0;
 
   background-image: url("./Backgroud2.jpg");
   background-size: 100% 100%;
@@ -39,17 +48,22 @@ button {
   background-repeat: no-repeat;
   background-color: #dff7f7;
 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
 }
 
-/* ===== Welcome Header ===== */
 .welcome-header {
+  position: absolute;
+  top: max(0px, env(safe-area-inset-top));
+  left: 0;
+  right: 0;
   height: 155px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 10px 14px;
   text-align: center;
+  z-index: 2;
 }
 
 .welcome-heading {
@@ -59,7 +73,7 @@ button {
 
 .welcome-small {
   color: #eab1a8;
-  font-size: 25px;
+  font-size: clamp(20px, 6vw, 25px);
   font-weight: 600;
   -webkit-text-stroke: 0.7px #275d68;
   paint-order: stroke fill;
@@ -68,29 +82,30 @@ button {
 .welcome-heading h1 {
   margin: 0;
   color: #edae43;
-  font-size: 39px;
+  font-size: clamp(30px, 9vw, 39px);
   line-height: 1.2;
   font-weight: 600;
   -webkit-text-stroke: 1.5px #27636a;
   paint-order: stroke fill;
 }
 
-/* ===== Main Content ===== */
 .welcome-content {
   position: absolute;
-  top: 200px;
+  top: calc(155px + env(safe-area-inset-top));
   left: 0;
   right: 0;
-  bottom: 72px;
+  bottom: calc(76px + env(safe-area-inset-bottom));
 
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
 
-  padding: 8px 30px 30px;
+  padding: 8px 14px 20px;
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 
@@ -98,7 +113,6 @@ button {
   display: none;
 }
 
-/* ===== Description ===== */
 .intro-box {
   flex-shrink: 0;
   width: 100%;
@@ -109,21 +123,20 @@ button {
   color: #ffffff;
   text-align: center;
 
-  font-size: 12px;
+  font-size: clamp(11px, 3vw, 12px);
   line-height: 1.7;
   font-weight: 500;
 
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* ===== Farmer Image ===== */
 .farmer-image {
   display: block;
   flex-shrink: 0;
 
   width: 100%;
   max-width: 270px;
-  height: 190px;
+  height: clamp(145px, 22dvh, 190px);
 
   object-fit: contain;
   margin: 2px auto;
@@ -139,7 +152,6 @@ button {
   font-size: 45px;
 }
 
-/* ===== Caption ===== */
 .welcome-caption {
   flex-shrink: 0;
   margin: 2px 0 4px;
@@ -150,7 +162,6 @@ button {
   font-weight: 500;
 }
 
-/* ===== Start Button ===== */
 .primary-button,
 .add-pond-button {
   border: 2px solid #168b91;
@@ -189,21 +200,22 @@ button {
   background: #fbf5d0;
   color: #168b91;
 
-  font: 400 28px/1 Arial, sans-serif;
+  font:
+    400 28px/1 Arial,
+    sans-serif;
 }
 
 .start-button:active {
   transform: scale(0.98);
 }
 
-/* ===== Bottom Navigation ===== */
 .bottom-nav {
   position: absolute;
   z-index: 5;
 
   left: 16px;
   right: 16px;
-  bottom: 6px;
+  bottom: calc(6px + env(safe-area-inset-bottom));
   height: 58px;
 
   display: flex;
@@ -216,6 +228,7 @@ button {
   border-radius: 17px;
 
   background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
 }
 
@@ -264,55 +277,47 @@ button {
   transform: scale(0.96);
 }
 
-/* ===== Mobile ===== */
-@media (max-width: 412px) {
+@media (min-width: 600px) {
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .app-page {
-    width: 100%;
-    max-width: 412px;
-    height: 100vh;
-    height: 100dvh;
-    border-radius: 0;
-  }
-
-  .welcome-header {
-    height: 155px;
-  }
-
-  .welcome-small {
-    font-size: clamp(20px, 6vw, 25px);
-  }
-
-  .welcome-heading h1 {
-    font-size: clamp(30px, 9vw, 39px);
-  }
-
-  .welcome-content {
-    top: 155px;
-    bottom: 70px;
-    padding-left: 14px;
-    padding-right: 14px;
-  }
-
-  .intro-box {
-    font-size: clamp(11px, 3vw, 12px);
-  }
-
-  .farmer-image {
-    height: clamp(145px, 27vh, 190px);
-  }
-
-  .bottom-nav {
-    left: 16px;
-    right: 16px;
-    bottom: 6px;
-    height: 58px;
+    width: 412px;
+    height: min(850px, 100dvh);
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
   }
 }
 
-/* ===== Short Screens ===== */
-@media (max-height: 650px) {
+@media (max-width: 375px) {
+  .welcome-small {
+    font-size: 20px;
+  }
+
+  .welcome-heading h1 {
+    font-size: 30px;
+  }
+
   .welcome-content {
-    bottom: 65px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .intro-box {
+    font-size: 11px;
+  }
+}
+
+@media (max-height: 650px) {
+  .welcome-header {
+    height: 120px;
+  }
+
+  .welcome-content {
+    top: calc(120px + env(safe-area-inset-top));
     gap: 5px;
     padding-top: 5px;
   }
@@ -337,14 +342,10 @@ button {
   }
 }
 
-button {
-    cursor: pointer;
-}
-
 button:hover {
-    filter: brightness(0.96);
+  filter: brightness(0.96);
 }
 
 button:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }

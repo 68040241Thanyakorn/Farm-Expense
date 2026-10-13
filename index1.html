@@ -1,53 +1,70 @@
 <!doctype html>
-<html lang="en">
+<html lang="th">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
     <title>Farm Expense - ฟาร์มของฉัน</title>
+
     <link rel="stylesheet" href="./styles1.css" />
-    <script src="./redirect.js" defer></script>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
     <link rel="manifest" href="./manifest.webmanifest" />
+
     <meta name="theme-color" content="#168b91" />
-    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
     <meta name="apple-mobile-web-app-title" content="Farm Expense" />
-    <link rel="icon" type="image/png" href="./icons/icon-192.png">
+
+    <link rel="icon" type="image/png" href="./icons/icon-192.png" />
+
+    <script src="./redirect.js" defer></script>
   </head>
 
-  <button
-    type="button"
-    class="start-button"
-    onclick="window.location.href = './index2.html'"
-  >
-    เริ่มใช้งาน
-  </button>
-
-  <div class="bubble-container" aria-hidden="true">
-    <span class="bubble bubble-1"></span>
-    <span class="bubble bubble-2"></span>
-    <span class="bubble bubble-3"></span>
-    <span class="bubble bubble-4"></span>
-    <span class="bubble bubble-5"></span>
-    <span class="bubble bubble-6"></span>
-    <span class="bubble bubble-7"></span>
-    <span class="bubble bubble-8"></span>
-    <span class="bubble bubble-9"></span>
-    <span class="bubble bubble-10"></span>
-    <span class="bubble bubble-11"></span>
-    <span class="bubble bubble-12"></span>
-  </div>
   <body>
     <div class="page-container">
+      <!-- Logo -->
       <div class="logo"></div>
+
+      <!-- App Title -->
+      <div class="app-title">
+        <h1>Farm Expense</h1>
+        <p>แอปบันทึกต้นทุนฟาร์มประมง</p>
+      </div>
+
+      <button
+        type="button"
+        class="start-button"
+        onclick="window.location.href = './index2.html'"
+      >
+        เริ่มใช้งาน
+      </button>
+
+      <div class="bubble-container" aria-hidden="true">
+        <span class="bubble bubble-1"></span>
+        <span class="bubble bubble-2"></span>
+        <span class="bubble bubble-3"></span>
+        <span class="bubble bubble-4"></span>
+        <span class="bubble bubble-5"></span>
+        <span class="bubble bubble-6"></span>
+        <span class="bubble bubble-7"></span>
+        <span class="bubble bubble-8"></span>
+        <span class="bubble bubble-9"></span>
+        <span class="bubble bubble-10"></span>
+        <span class="bubble bubble-11"></span>
+        <span class="bubble bubble-12"></span>
+      </div>
     </div>
 
-    <div class="app-title">
-      <h1>Farm Expense</h1>
-      <p>แอปบันทึกต้นทุนฟาร์มประมง</p>
-    </div>
     <script src="./pwa.js"></script>
   </body>
 </html>

@@ -2,9 +2,16 @@
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Farm Expense" />
+    <meta name="theme-color" content="#168b91" />
+    <link rel="manifest" href="./manifest.webmanifest" />
     <title>ยินดีต้อนรับสู่ฟาร์มของฉัน</title>
 
     <link rel="stylesheet" href="./styles2.css" />
@@ -30,15 +37,13 @@
         </div>
       </header>
 
-      <!-- ========== CONTENT ========== -->
       <section class="welcome-content">
         <div class="intro-box">
-          แอปที่ช่วยเกษตรกรจัดการข้อมูลทางการเงินของฟาร์ม<br />
-          สามารถบันทึกรายรับ–รายจ่าย คำนวณกำไร–ขาดทุน<br />
-          และใช้ AI วิเคราะห์ข้อมูลเพื่อช่วยบริหารต้นทุนของฟาร์ม
+          แอปที่ช่วยเกษตรกรจัดการข้อมูลทางการเงินของฟาร์ม
+          สามารถบันทึกรายรับ–รายจ่าย คำนวณกำไร–ขาดทุน
+          และใช้ระบบวิเคราะห์ข้อมูลเพื่อช่วยบริหารต้นทุนของฟาร์ม
         </div>
 
-        <!-- รูปเกษตรกร -->
         <img
           class="farmer-image"
           src="./Fishing.png"
@@ -57,7 +62,6 @@
           เริ่มต้นบันทึกข้อมูลการเลี้ยงปลาเศรษฐกิจของคุณได้เลย
         </p>
 
-        <!-- ปุ่มเพิ่มบ่อ -->
         <button
           class="primary-button start-button"
           type="button"
@@ -69,7 +73,6 @@
         </button>
       </section>
 
-      <!-- ========== NAVBAR ========== -->
       <nav class="bottom-nav" aria-label="เมนูหลัก">
         <!-- หน้าหลัก -->
         <button
@@ -81,7 +84,6 @@
           <span>หน้าหลัก</span>
         </button>
 
-        <!-- รายการบ่อ -->
         <button
           class="nav-item"
           type="button"
@@ -91,13 +93,11 @@
           <span>รายการบ่อ</span>
         </button>
 
-        <!-- สรุปผล -->
         <button class="nav-item" type="button" onclick="openPondPage('index8')">
           <span class="nav-icon">▥</span>
           <span>สรุปผล</span>
         </button>
 
-        <!-- AI -->
         <button class="nav-item" type="button" onclick="openPondPage('index9')">
           <span class="nav-icon">◎</span>
           <span>AI</span>
@@ -105,7 +105,6 @@
       </nav>
     </main>
 
-    <!-- ========== JAVASCRIPT ========== -->
     <script>
       function openPondPage(page) {
         // อ่านข้อมูลบ่อปลาที่บันทึกไว้

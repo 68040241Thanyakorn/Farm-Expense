@@ -1,8 +1,34 @@
-// Register PWA service worker without changing the existing Farm Expense logic.
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js')
-      .then(reg => console.log('Farm Expense PWA ready:', reg.scope))
-      .catch(err => console.warn('PWA registration failed:', err));
+
+"use strict";
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", async () => {
+    try {
+      const registration = await navigator.serviceWorker.register(
+        "./service-worker.js",
+        {
+          scope: "./",
+          updateViaCache: "none"
+        }
+      );
+
+      console.log(
+        "Farm Expense PWA ready:",
+        registration.scope
+      );
+
+      registration.update().catch(error => {
+        console.warn(
+          "PWA update check failed:",
+          error
+        );
+      });
+
+    } catch (error) {
+      console.warn(
+        "PWA registration failed:",
+        error
+      );
+    }
   });
 }

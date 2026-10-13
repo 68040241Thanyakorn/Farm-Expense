@@ -1,7 +1,8 @@
+
 {
   "name": "Farm Expense - จัดการฟาร์มปลา",
   "short_name": "Farm Expense",
-  "description": "บันทึกรายรับรายจ่ายและวิเคราะห์ฟาร์มปลา",
+  "description": "แอปบันทึกรายรับรายจ่าย สรุปกำไรขาดทุน และวิเคราะห์ต้นทุนฟาร์มปลา",
   "lang": "th",
   "start_url": "./index1.html",
   "id": "./index1.html",
@@ -22,6 +23,12 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

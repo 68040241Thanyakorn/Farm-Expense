@@ -2,46 +2,33 @@
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Farm Expense" />
+    <meta name="theme-color" content="#168b91" />
+
     <title>บันทึกรายรับ - Farm Expense</title>
 
     <link rel="stylesheet" href="./styles6.css" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" type="image/png" href="./icons/icon-192.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-
-    <style>
-      .bottom-nav .nav-item,
-      .bottom-nav .nav-item:visited,
-      .bottom-nav .nav-item:hover {
-        text-decoration: none;
-        color: #168b91;
-      }
-
-      .bottom-nav .nav-item {
-        flex: 1;
-        min-width: 0;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1px;
-        border: 0;
-        background: transparent;
-        font-family: Mitr, sans-serif;
-        font-size: 9px;
-        line-height: 1.2;
-      }
-    </style>
   </head>
 
   <body>
     <main class="app-page" style="--accent: #208f91">
-      <!-- ========== HEADER ========== -->
       <header class="finance-header">
         <div class="pond-banner">
           <button
@@ -65,9 +52,7 @@
         </div>
       </header>
 
-      <!-- ========== CONTENT ========== -->
       <section class="finance-content">
-        <!-- สลับรายรับ / รายจ่าย -->
         <div class="entry-tabs">
           <a
             href="index6.html"
@@ -81,7 +66,6 @@
           <a href="index7.html" id="expense-tab"> รายจ่าย </a>
         </div>
 
-        <!-- ฟอร์มบันทึกรายรับ -->
         <form class="entry-form" id="entry-form">
           <label for="category">ประเภท</label>
 
@@ -131,7 +115,6 @@
         </form>
       </section>
 
-      <!-- ========== NAVBAR ========== -->
       <nav class="bottom-nav" aria-label="เมนูหลัก">
         <a class="nav-item" href="index2.html">
           <span class="nav-icon">⌂</span>
@@ -155,17 +138,22 @@
       </nav>
     </main>
 
-    <!-- ========== JAVASCRIPT ========== -->
     <script src="./finance.js"></script>
 
     <script>
-      // สร้างลิงก์พร้อมข้อมูลบ่อและเดือน
-      function pageLink(page) {
+      function getPondId() {
         const params = new URLSearchParams(location.search);
 
-        const pondId = params.get("pond");
-        const picker = document.getElementById("month-picker");
+        return (
+          params.get("pond") || localStorage.getItem("farmExpenseSelectedPond")
+        );
+      }
 
+      function pageLink(page) {
+        const params = new URLSearchParams(location.search);
+        const pondId = getPondId();
+
+        const picker = document.getElementById("month-picker");
         const month = picker?.value || params.get("month");
 
         const url = new URL(page + ".html", location.href);
@@ -182,39 +170,17 @@
       }
 
       function goToPondDashboard() {
-        const params = new URLSearchParams(location.search);
-
-        const pondId =
-          params.get("pond") || localStorage.getItem("farmExpenseSelectedPond");
-
-        const month =
-          document.getElementById("month-picker")?.value || params.get("month");
-
-        const url = new URL("index5.html", location.href);
-
-        if (pondId) {
-          url.searchParams.set("pond", pondId);
-        }
-
-        if (month) {
-          url.searchParams.set("month", month);
-        }
-
-        location.href = url.href;
+        location.href = pageLink("index5");
       }
 
-      // เริ่มต้นหน้า
       if (setup()) {
         const picker = document.getElementById("month-picker");
-
-        // จำบ่อที่กำลังใช้งาน
-        const currentPondId = new URLSearchParams(location.search).get("pond");
+        const dateInput = document.getElementById("date");
+        const currentPondId = getPondId();
 
         if (currentPondId) {
           localStorage.setItem("farmExpenseSelectedPond", currentPondId);
         }
-
-        // ========== NAVBAR ==========
 
         function updateNavigation() {
           document.getElementById("nav-summary").href = pageLink("index8");
@@ -226,29 +192,35 @@
           document.getElementById("expense-tab").href = pageLink("index7");
         }
 
+        function updateDefaultDate() {
+          const now = new Date();
+
+          const today =
+            now.getFullYear() +
+            "-" +
+            String(now.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(now.getDate()).padStart(2, "0");
+
+          const selectedMonth = picker.value;
+
+          if (!selectedMonth) {
+            dateInput.value = today;
+            return;
+          }
+
+          dateInput.value =
+            selectedMonth === today.slice(0, 7) ? today : selectedMonth + "-01";
+        }
+
         updateNavigation();
+        updateDefaultDate();
 
-        picker.addEventListener("change", updateNavigation);
+        picker.addEventListener("change", () => {
+          updateNavigation();
+          updateDefaultDate();
+        });
 
-        // ========== DEFAULT DATE ==========
-
-        const now = new Date();
-
-        const today =
-          now.getFullYear() +
-          "-" +
-          String(now.getMonth() + 1).padStart(2, "0") +
-          "-" +
-          String(now.getDate()).padStart(2, "0");
-
-        const selectedMonth = picker.value;
-
-        document.getElementById("date").value =
-          selectedMonth === today.slice(0, 7) ? today : selectedMonth + "-01";
-
-        // ========== SAVE INCOME ==========
-
-        // ใช้ระบบบันทึกเดิมใน finance.js
         saveEntry("income");
       }
     </script>

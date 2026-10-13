@@ -2,15 +2,31 @@
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Farm Expense" />
+    <meta name="theme-color" content="#168b91" />
+
     <title>ข้อมูลบ่อปลา - Farm Expense</title>
+
     <link rel="stylesheet" href="./styles5.css" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" type="image/png" href="./icons/icon-192.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
   </head>
+
   <body>
     <main class="app-page">
       <header class="finance-header">
@@ -23,9 +39,12 @@
           >
             ❮
           </button>
+
           <img src="./Fish.png" alt="ปลา" />
+
           <strong id="pond-title">ข้อมูลบ่อปลา</strong>
         </div>
+
         <div class="header-meta">
           <select id="month-picker" aria-label="เลือกเดือน"></select>
           <div class="count-pill" id="fish-count">จำนวนปลา - ตัว</div>
@@ -35,43 +54,62 @@
       <section class="finance-content">
         <div class="totals">
           <div class="total income">
-            รายรับ<strong id="income">0</strong>บาท
+            รายรับ
+            <strong id="income">0</strong>
+            บาท
           </div>
+
           <div class="total expense">
-            รายจ่าย<strong id="expense">0</strong>บาท
+            รายจ่าย
+            <strong id="expense">0</strong>
+            บาท
           </div>
-          <div class="total profit">กำไร<strong id="profit">0</strong>บาท</div>
+
+          <div class="total profit">
+            กำไร
+            <strong id="profit">0</strong>
+            บาท
+          </div>
         </div>
+
         <div class="action-row">
           <button type="button" id="add-income">+ กรอกรายรับ</button>
+
           <button type="button" class="expense-btn" id="add-expense">
             + กรอกรายจ่าย
           </button>
         </div>
+
         <div class="panel">
           <h2>กำไร–ขาดทุนรายเดือน</h2>
+
           <div class="chart-legend">
             <span><i class="dot income-dot"></i>รายรับ</span>
             <span><i class="dot expense-dot"></i>รายจ่าย</span>
           </div>
+
           <div class="bars">
             <div class="bar-wrap">
               <span id="income-label">0</span>
               <div id="income-bar" class="bar income-bar"></div>
             </div>
+
             <div class="bar-wrap">
               <span id="expense-label">0</span>
               <div id="expense-bar" class="bar expense-bar"></div>
             </div>
           </div>
         </div>
+
         <div class="panel ai-panel" id="ai-result">
           <div class="ai-symbol">💡</div>
+
           <div class="ai-copy">
             <h2>AI แนะนำ</h2>
             <p id="advice">กำลังวิเคราะห์ข้อมูล...</p>
           </div>
         </div>
+
         <div class="panel transactions">
           <h2>รายการในเดือนนี้</h2>
           <div id="transaction-list" class="muted">ยังไม่มีรายการ</div>
@@ -79,29 +117,39 @@
       </section>
 
       <nav class="bottom-nav" aria-label="เมนูหลัก">
-        <a class="nav-item" href="index2.html"
-          ><span class="nav-icon">⌂</span><span>หน้าหลัก</span></a
-        >
-        <a class="nav-item" href="index4.html"
-          ><span class="nav-icon">▤</span><span>รายการบ่อ</span></a
-        >
-        <a class="nav-item" id="nav-summary" href="index8.html"
-          ><span class="nav-icon">▥</span><span>สรุปผล</span></a
-        >
-        <a class="nav-item" id="nav-ai" href="index9.html"
-          ><span class="nav-icon">◎</span><span>AI</span></a
-        >
+        <a class="nav-item" href="index2.html">
+          <span class="nav-icon">⌂</span>
+          <span>หน้าหลัก</span>
+        </a>
+
+        <a class="nav-item" href="index4.html">
+          <span class="nav-icon">▤</span>
+          <span>รายการบ่อ</span>
+        </a>
+
+        <a class="nav-item" id="nav-summary" href="index8.html">
+          <span class="nav-icon">▥</span>
+          <span>สรุปผล</span>
+        </a>
+
+        <a class="nav-item" id="nav-ai" href="index9.html">
+          <span class="nav-icon">◎</span>
+          <span>AI</span>
+        </a>
       </nav>
     </main>
 
     <script src="./finance.js"></script>
+
     <script>
       if (setup()) {
         const picker = document.getElementById("month-picker");
         const query = new URLSearchParams(location.search);
         const pondId = query.get("pond");
+
         const selectedPond =
           typeof currentPond === "function" ? currentPond() : null;
+
         const resolvedPondId =
           pondId ||
           (selectedPond
@@ -111,87 +159,129 @@
         if (resolvedPondId) {
           try {
             localStorage.setItem("farmExpenseSelectedPond", resolvedPondId);
-          } catch (_) {}
+          } catch (error) {
+            console.error(error);
+          }
         }
 
         function pageLink(page) {
           const url = new URL(page + ".html", location.href);
-          if (resolvedPondId) url.searchParams.set("pond", resolvedPondId);
+
+          if (resolvedPondId) {
+            url.searchParams.set("pond", resolvedPondId);
+          }
+
           const month = picker.value || query.get("month");
-          if (month) url.searchParams.set("month", month);
+
+          if (month) {
+            url.searchParams.set("month", month);
+          }
+
           return url.href;
         }
 
         function refreshNavLinks() {
           document.getElementById("nav-summary").href = pageLink("index8");
+
           document.getElementById("nav-ai").href = pageLink("index9");
         }
-        refreshNavLinks();
-        picker.addEventListener("change", refreshNavLinks);
-        document
-          .getElementById("add-income")
-          .addEventListener(
-            "click",
-            () => (location.href = pageLink("index6")),
-          );
-        document
-          .getElementById("add-expense")
-          .addEventListener(
-            "click",
-            () => (location.href = pageLink("index7")),
-          );
 
-        const inc = sum("income");
-        const exp = sum("expense");
-        document.getElementById("income").textContent = money(inc);
-        document.getElementById("expense").textContent = money(exp);
-        document.getElementById("profit").textContent = money(inc - exp);
-        document.getElementById("income-label").textContent = money(inc);
-        document.getElementById("expense-label").textContent = money(exp);
-        const maxValue = Math.max(inc, exp, 1);
-        document.getElementById("income-bar").style.height =
-          (inc / maxValue) * 110 + "px";
-        document.getElementById("expense-bar").style.height =
-          (exp / maxValue) * 110 + "px";
+        document.getElementById("add-income").addEventListener("click", () => {
+          location.href = pageLink("index6");
+        });
 
-        const list = document.getElementById("transaction-list");
-        list.replaceChildren();
-        const monthEntries = entries()
-          .slice()
-          .sort((a, b) => String(b.date).localeCompare(String(a.date)));
-        if (!monthEntries.length) {
-          list.textContent = "ยังไม่มีรายการในเดือนนี้";
-        } else {
-          for (const t of monthEntries) {
-            const row = document.createElement("div");
-            row.className = "transaction";
-            const info = document.createElement("span");
-            info.textContent = `${t.category || "อื่น ๆ"} (${t.date || "-"})`;
-            const amount = document.createElement("strong");
-            amount.textContent =
-              (t.type === "income" ? "+" : "−") + money(t.amount) + " ฿";
-            row.append(info, amount);
-            list.appendChild(row);
+        document.getElementById("add-expense").addEventListener("click", () => {
+          location.href = pageLink("index7");
+        });
+
+        async function renderFinance() {
+          refreshNavLinks();
+
+          const inc = sum("income");
+          const exp = sum("expense");
+          const profit = inc - exp;
+
+          document.getElementById("income").textContent = money(inc);
+
+          document.getElementById("expense").textContent = money(exp);
+
+          document.getElementById("profit").textContent = money(profit);
+
+          document.getElementById("income-label").textContent = money(inc);
+
+          document.getElementById("expense-label").textContent = money(exp);
+
+          const maxValue = Math.max(inc, exp, 1);
+
+          document.getElementById("income-bar").style.height =
+            (inc / maxValue) * 110 + "px";
+
+          document.getElementById("expense-bar").style.height =
+            (exp / maxValue) * 110 + "px";
+
+          const list = document.getElementById("transaction-list");
+          list.replaceChildren();
+
+          const monthEntries = entries()
+            .slice()
+            .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+
+          if (!monthEntries.length) {
+            list.textContent = "ยังไม่มีรายการในเดือนนี้";
+          } else {
+            for (const t of monthEntries) {
+              const row = document.createElement("div");
+              row.className = "transaction";
+
+              const info = document.createElement("span");
+              info.textContent = `${t.category || "อื่น ๆ"} (${t.date || "-"})`;
+
+              const amount = document.createElement("strong");
+              amount.textContent =
+                (t.type === "income" ? "+" : "−") + money(t.amount) + " ฿";
+
+              row.append(info, amount);
+              list.appendChild(row);
+            }
+          }
+
+          const advice = document.getElementById("advice");
+          advice.textContent = "กำลังวิเคราะห์ข้อมูล...";
+
+          try {
+            const response = await fetch(
+              "https://farm-expense-backend.onrender.com/api/advice",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  transactions: monthEntries,
+                }),
+              },
+            );
+
+            if (!response.ok) {
+              throw new Error("API error");
+            }
+
+            const data = await response.json();
+
+            advice.textContent = data.advice || "ไม่มีคำแนะนำ";
+          } catch (error) {
+            advice.textContent =
+              "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง";
           }
         }
 
-        const advice = document.getElementById("advice");
-        fetch('https://farm-expense-backend.onrender.com/api/advice', {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ transactions: monthEntries }),
-        })
-          .then((response) => {
-            if (!response.ok) throw new Error("API error");
-            return response.json();
-          })
-          .then((data) => {
-            advice.textContent = data.advice || "ไม่มีคำแนะนำ";
-          })
-          .catch(() => {
-            advice.textContent =
-              "ไม่สามารถเชื่อมต่อ AI Server ได้ กรุณาลองใหม่อีกครั้ง";
-          });
+        picker.addEventListener("change", () => {
+          const url = new URL(location.href);
+          url.searchParams.set("month", picker.value);
+          location.href = url.href;
+        });
+
+        renderFinance();
       }
     </script>
   </body>
