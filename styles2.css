@@ -30,26 +30,60 @@ button {
   touch-action: manipulation;
 }
 
+
+/* ===== APP PAGE ===== */
+
+
+/* ===== APP PAGE ===== */
+
+
+
+/* ===== APP PAGE : 4 BACKGROUND LAYERS ===== */
+
 .app-page {
   position: relative;
   isolation: isolate;
+
   width: 100%;
   max-width: 412px;
+
   height: 100vh;
   height: 100dvh;
   min-height: 0;
+
   margin: 0 auto;
   overflow: hidden;
   border-radius: 0;
 
-  background-image: url("./Backgroud2.jpg");
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: #dff7f7;
+  /* พื้นหลัง 4 ชั้น */
+  background-image:
+    url("./งื้อสวยจริงๆ.png"),
+    url("./ลุงเลี้ยงปลา.png"),
+    url("./ปะการัง.png"),
+    url("./Backgroud2.jpg");
 
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%;
+
+  background-position:
+    center center,
+    center center,
+    center bottom,
+    center center;
+
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat;
+
+  background-color: #dff7f7;
   box-shadow: none;
 }
+
 
 .welcome-header {
   position: absolute;
@@ -65,6 +99,24 @@ button {
   text-align: center;
   z-index: 2;
 }
+
+
+/* ===== WELCOME IMAGE ===== */
+
+.welcome-image {
+  display: block;
+  width: 100%;
+  max-width: 390px;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center;
+
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 
 .welcome-heading {
   width: 100%;
@@ -89,25 +141,32 @@ button {
   paint-order: stroke fill;
 }
 
+
 .welcome-content {
   position: absolute;
+
   top: calc(155px + env(safe-area-inset-top));
   left: 0;
   right: 0;
+
   bottom: calc(76px + env(safe-area-inset-bottom));
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
 
-  padding: 8px 14px 20px;
+  gap: 8px;
+  padding: 8px 14px 12px;
+
   overflow-x: hidden;
   overflow-y: auto;
+
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+
   scrollbar-width: none;
 }
+
 
 .welcome-content::-webkit-scrollbar {
   display: none;
@@ -130,37 +189,24 @@ button {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.farmer-image {
-  display: block;
-  flex-shrink: 0;
 
-  width: 100%;
-  max-width: 270px;
-  height: clamp(145px, 22dvh, 190px);
 
-  object-fit: contain;
-  margin: 2px auto;
-}
-
-.image-fallback {
-  display: none;
-  flex-shrink: 0;
-  width: 100%;
-  height: 150px;
-  align-items: center;
-  justify-content: center;
-  font-size: 45px;
-}
 
 .welcome-caption {
   flex-shrink: 0;
-  margin: 2px 0 4px;
+
+  /* ดันข้อความและปุ่มลงด้านล่าง */
+  margin-top: auto;
+  margin-bottom: 6px;
+
   color: #142f31;
   text-align: center;
+
   font-size: 11px;
   line-height: 1.5;
   font-weight: 500;
 }
+
 
 .primary-button,
 .add-pond-button {
@@ -171,8 +217,14 @@ button {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 
+
+
 .start-button {
   flex-shrink: 0;
+
+  /* ไม่ดันปุ่มแยกจากข้อความ */
+  margin-top: 0;
+
   width: 88%;
   min-height: 52px;
   padding: 6px 8px;
@@ -185,7 +237,12 @@ button {
   font-size: 13px;
   font-weight: 500;
   line-height: 1.4;
+
+  position: relative;
+  z-index: 3;
 }
+
+
 
 .plus-bubble {
   flex-shrink: 0;
@@ -348,4 +405,186 @@ button:hover {
 
 button:active {
   transform: scale(0.97);
+}
+
+
+/* ===== ขยับกล่องข้อความสีฟ้าลง ===== */
+
+.welcome-content .intro-box {
+  position: relative;
+  top: 25px;
+  margin-top: 0;
+}
+
+/* รองรับหน้าจอมือถือขนาดเล็ก */
+@media (max-height: 650px) {
+  .welcome-content .intro-box {
+    top: 20px;
+  }
+}
+
+/* =====================================
+   FLOATING BUBBLES ANIMATION
+   ===================================== */
+
+.bubbles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -60px;
+
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.13);
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+
+  box-shadow:
+    inset -3px -3px 7px rgba(255, 255, 255, 0.12),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.35),
+    0 0 5px rgba(255, 255, 255, 0.15);
+
+  animation: bubble-rise 12s linear infinite;
+}
+
+/* ฟองที่ 1 */
+.bubble:nth-child(1) {
+  left: 8%;
+  width: 14px;
+  height: 14px;
+  animation-duration: 11s;
+  animation-delay: -2s;
+}
+
+/* ฟองที่ 2 */
+.bubble:nth-child(2) {
+  left: 20%;
+  width: 24px;
+  height: 24px;
+  animation-duration: 14s;
+  animation-delay: -7s;
+}
+
+/* ฟองที่ 3 */
+.bubble:nth-child(3) {
+  left: 32%;
+  width: 12px;
+  height: 12px;
+  animation-duration: 10s;
+  animation-delay: -4s;
+}
+
+/* ฟองที่ 4 */
+.bubble:nth-child(4) {
+  left: 44%;
+  width: 19px;
+  height: 19px;
+  animation-duration: 13s;
+  animation-delay: -9s;
+}
+
+/* ฟองที่ 5 */
+.bubble:nth-child(5) {
+  left: 55%;
+  width: 10px;
+  height: 10px;
+  animation-duration: 9s;
+  animation-delay: -3s;
+}
+
+/* ฟองที่ 6 */
+.bubble:nth-child(6) {
+  left: 66%;
+  width: 26px;
+  height: 26px;
+  animation-duration: 16s;
+  animation-delay: -11s;
+}
+
+/* ฟองที่ 7 */
+.bubble:nth-child(7) {
+  left: 77%;
+  width: 15px;
+  height: 15px;
+  animation-duration: 12s;
+  animation-delay: -5s;
+}
+
+/* ฟองที่ 8 */
+.bubble:nth-child(8) {
+  left: 88%;
+  width: 21px;
+  height: 21px;
+  animation-duration: 15s;
+  animation-delay: -8s;
+}
+
+/* ฟองที่ 9 */
+.bubble:nth-child(9) {
+  left: 15%;
+  width: 9px;
+  height: 9px;
+  animation-duration: 10s;
+  animation-delay: -6s;
+}
+
+/* ฟองที่ 10 */
+.bubble:nth-child(10) {
+  left: 72%;
+  width: 17px;
+  height: 17px;
+  animation-duration: 13s;
+  animation-delay: -1s;
+}
+
+/* เคลื่อนไหวจากล่างขึ้นบน */
+@keyframes bubble-rise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.7);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translate3d(12px, -55vh, 0) scale(1);
+    opacity: 0.7;
+  }
+
+  90% {
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translate3d(-8px, -110vh, 0) scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* ให้เนื้อหาอยู่เหนือฟองสบู่ */
+.welcome-header,
+.welcome-content,
+.page-header,
+.pond-form {
+  z-index: 2;
+}
+
+/* รองรับผู้ใช้ที่ปิดแอนิเมชัน */
+@media (prefers-reduced-motion: reduce) {
+  .bubble {
+    animation: none;
+    opacity: 0.25;
+  }
 }

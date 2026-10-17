@@ -41,17 +41,40 @@ button {
 
   width: 100%;
   max-width: 412px;
+
   height: 100vh;
   height: 100dvh;
+  min-height: 0;
 
   margin: 0 auto;
   overflow: hidden;
   border-radius: 0;
 
-  background: #dff7f7 url("./Backgroud2.jpg") center / 100% 100% no-repeat;
+  /* พื้นหลัง 3 ชั้น */
+  background-image:
+    url("./งื้อสวยจริงๆ.png"),
+    url("./ปะการัง.png"),
+    url("./Backgroud2.jpg");
 
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%;
+
+  background-position:
+    center center,
+    center bottom,
+    center center;
+
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat;
+
+  background-color: #dff7f7;
   box-shadow: none;
 }
+
 
 .page-head {
   position: absolute;
@@ -130,12 +153,19 @@ button {
   flex: 0 0 42%;
 }
 
+
+/* ===== AI HELLO POSITION ===== */
+
 .ai-hello {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
+
+  /* ขยับรูปปูและกล่องข้อความลง 8px */
+  margin-top: 14px;
   margin-bottom: 14px;
 }
+
 
 .ai-mascot {
   width: 76px;
@@ -568,4 +598,81 @@ button:active {
     height: 25px;
     font-size: 18px;
   }
+}
+
+/* ===== MOVE AI HELLO DOWN ===== */
+
+.scroll-content .ai-hello {
+  transform: translateY(15px);
+  margin-bottom: 29px;
+}
+
+/* วงกลมขนาดเท่าไอคอนปูเดิม */
+.ai-mascot {
+  width: 76px;
+  height: 76px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #fbf1c5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* รูปปลา ขนาดเท่าไอคอนปูเดิม */
+.fish-image {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  display: block;
+}
+
+/* รองรับหน้าจอเล็ก */
+@media (max-width: 350px) {
+  .ai-mascot {
+    width: 60px;
+    height: 60px;
+  }
+
+  .fish-image {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* ขยายเฉพาะตัวปลา */
+.ai-mascot .fish-image {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ===== BACKGROUND 4 LAYERS ===== */
+
+.app-page {
+  background-image:
+    url("./AI วิเคราะห์.png"),
+    url("./งื้อสวยจริงๆ.png"),
+    url("./ปะการัง.png"),
+    url("./Backgroud2.jpg");
+
+  background-size:
+    100% auto,
+    100% 100%,
+    100% 100%,
+    100% 100%;
+
+  background-position:
+    center top,
+    center center,
+    center bottom,
+    center center;
+
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat;
 }

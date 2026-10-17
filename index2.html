@@ -1,164 +1,205 @@
+
 <!doctype html>
 <html lang="th">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="Farm Expense" />
-    <meta name="theme-color" content="#168b91" />
-    <link rel="manifest" href="./manifest.webmanifest" />
-    <title>ยินดีต้อนรับสู่ฟาร์มของฉัน</title>
+<head>
+  <meta charset="UTF-8" />
 
-    <link rel="stylesheet" href="./styles2.css" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Farm Expense" />
+  <meta name="theme-color" content="#168b91" />
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="manifest" href="./manifest.webmanifest" />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
+  <title>ยินดีต้อนรับสู่ฟาร์มของฉัน</title>
 
-  <body>
-    <main class="app-page welcome-page">
-      <!-- ========== HEADER ========== -->
-      <header class="welcome-header">
-        <div class="welcome-heading">
-          <div class="welcome-small">ยินดีต้อนรับสู่</div>
+  <link rel="stylesheet" href="./styles2.css" />
 
-          <h1>ฟาร์มของฉัน</h1>
-        </div>
-      </header>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-      <section class="welcome-content">
-        <div class="intro-box">
-          แอปที่ช่วยเกษตรกรจัดการข้อมูลทางการเงินของฟาร์ม
-          สามารถบันทึกรายรับ–รายจ่าย คำนวณกำไร–ขาดทุน
-          และใช้ระบบวิเคราะห์ข้อมูลเพื่อช่วยบริหารต้นทุนของฟาร์ม
-        </div>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
 
-        <img
-          class="farmer-image"
-          src="./Fishing.png"
-          alt="เกษตรกรกำลังให้อาหารปลา"
-          onerror="
-            this.style.display = 'none';
-            document.getElementById('image-fallback').style.display = 'flex';
-          "
-        />
+<body>
+  <main class="app-page welcome-page">
 
-        <div id="image-fallback" class="image-fallback" aria-hidden="true">
-          🐟 🧑‍🌾 🐟
-        </div>
 
-        <p class="welcome-caption">
-          เริ่มต้นบันทึกข้อมูลการเลี้ยงปลาเศรษฐกิจของคุณได้เลย
-        </p>
+<!-- ===== WELCOME HEADER ===== -->
+<header class="welcome-header">
+  <img
+    id="welcome-image"
+    src="./welcome.png"
+    alt="ยินดีต้อนรับสู่ฟาร์มของฉัน"
+    class="welcome-image"
+  />
+<!-- ===== FLOATING BUBBLES ===== -->
+<div class="bubbles" aria-hidden="true">
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+</div>
 
-        <button
-          class="primary-button start-button"
-          type="button"
-          onclick="location.href = 'index3.html'"
-        >
-          <span class="plus-bubble" aria-hidden="true"> + </span>
+  
+</header>
 
-          <span> เพิ่มบ่อและชนิดปลาถัดไป </span>
-        </button>
-      </section>
 
-      <nav class="bottom-nav" aria-label="เมนูหลัก">
-        <!-- หน้าหลัก -->
-        <button
-          class="nav-item active"
-          type="button"
-          onclick="location.href = 'index2.html'"
-        >
-          <span class="nav-icon">⌂</span>
-          <span>หน้าหลัก</span>
-        </button>
+    <!-- ===== CONTENT ===== -->
+    <section class="welcome-content">
 
-        <button
-          class="nav-item"
-          type="button"
-          onclick="location.href = 'index4.html'"
-        >
-          <span class="nav-icon">▤</span>
-          <span>รายการบ่อ</span>
-        </button>
+      <!-- ข้อความเดิม ไม่เปลี่ยน -->
+      <div class="intro-box">
+        แอปที่ช่วยเกษตรกรจัดการข้อมูลทางการเงินของฟาร์ม
+        สามารถบันทึกรายรับ–รายจ่าย คำนวณกำไร–ขาดทุน
+        และใช้ระบบวิเคราะห์ข้อมูลเพื่อช่วยบริหารต้นทุนของฟาร์ม
+      </div>
 
-        <button class="nav-item" type="button" onclick="openPondPage('index8')">
-          <span class="nav-icon">▥</span>
-          <span>สรุปผล</span>
-        </button>
 
-        <button class="nav-item" type="button" onclick="openPondPage('index9')">
-          <span class="nav-icon">◎</span>
-          <span>AI</span>
-        </button>
-      </nav>
-    </main>
+      <!-- ข้อความเดิม -->
+      <p class="welcome-caption">
+        เริ่มต้นบันทึกข้อมูลการเลี้ยงปลาเศรษฐกิจของคุณได้เลย
+      </p>
 
-    <script>
-      function openPondPage(page) {
-        // อ่านข้อมูลบ่อปลาที่บันทึกไว้
-        let ponds = [];
+      <!-- ปุ่มเดิม -->
+      <button
+        class="primary-button start-button"
+        type="button"
+        onclick="location.href = 'index3.html'"
+      >
+        <span class="plus-bubble" aria-hidden="true">+</span>
+        <span>เพิ่มบ่อและชนิดปลาถัดไป</span>
+      </button>
 
-        try {
-          ponds = JSON.parse(localStorage.getItem("farmExpensePonds") || "[]");
+  
+    </section>
 
-          if (!Array.isArray(ponds)) {
-            ponds = [];
-          }
-        } catch (error) {
-          ponds = [];
-        }
+    <!-- ===== NAVIGATION BAR: 4 ปุ่มเดิม ===== -->
+    <nav class="bottom-nav" aria-label="เมนูหลัก">
 
-        // ยังไม่มีบ่อปลา
-        if (ponds.length === 0) {
-          alert("กรุณาเพิ่มบ่อปลาก่อนใช้งาน");
+      <button
+        class="nav-item active"
+        type="button"
+        onclick="location.href = 'index2.html'"
+      >
+        <span class="nav-icon">⌂</span>
+        <span>หน้าหลัก</span>
+      </button>
 
-          location.href = "index3.html";
-          return;
-        }
+      <button
+        class="nav-item"
+        type="button"
+        onclick="location.href = 'index4.html'"
+      >
+        <span class="nav-icon">▤</span>
+        <span>รายการบ่อ</span>
+      </button>
 
-        // ตรวจสอบบ่อที่เคยเลือกไว้
-        const savedPondId = localStorage.getItem("farmExpenseSelectedPond");
+      <button
+        class="nav-item"
+        type="button"
+        onclick="openPondPage('index8')"
+      >
+        <span class="nav-icon">▥</span>
+        <span>สรุปผล</span>
+      </button>
 
-        let selectedPond = ponds.find(
-          (pond) => String(pond.id ?? pond.pondNumber) === String(savedPondId),
+      <button
+        class="nav-item"
+        type="button"
+        onclick="openPondPage('index9')"
+      >
+        <span class="nav-icon">◎</span>
+        <span>AI</span>
+      </button>
+
+    </nav>
+  </main>
+
+  <script>
+    function openPondPage(page) {
+      // อ่านข้อมูลบ่อปลาที่บันทึกไว้
+      let ponds = [];
+
+      try {
+        ponds = JSON.parse(
+          localStorage.getItem("farmExpensePonds") || "[]"
         );
 
-        // หากยังไม่มีบ่อที่เลือกล่าสุด ให้เลือกบ่อแรก
-        if (!selectedPond) {
-          selectedPond = ponds[0];
+        if (!Array.isArray(ponds)) {
+          ponds = [];
         }
-
-        const pondId = selectedPond.id ?? selectedPond.pondNumber;
-
-        // บันทึกบ่อที่เลือก
-        localStorage.setItem("farmExpenseSelectedPond", String(pondId));
-
-        // เดือนปัจจุบัน
-        const now = new Date();
-
-        const month =
-          now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0");
-
-        // เปิดหน้าสรุปผลหรือ AI
-        const url = new URL(page + ".html", window.location.href);
-
-        url.searchParams.set("pond", pondId);
-        url.searchParams.set("month", month);
-
-        location.href = url.href;
+      } catch (error) {
+        ponds = [];
       }
-    </script>
-  </body>
+
+      // ยังไม่มีบ่อปลา
+      if (ponds.length === 0) {
+        alert("กรุณาเพิ่มบ่อปลาก่อนใช้งาน");
+
+        location.href = "index3.html";
+        return;
+      }
+
+      // ตรวจสอบบ่อที่เคยเลือกไว้
+      const savedPondId = localStorage.getItem(
+        "farmExpenseSelectedPond"
+      );
+
+      let selectedPond = ponds.find(
+        (pond) =>
+          String(pond.id ?? pond.pondNumber) ===
+          String(savedPondId)
+      );
+
+      // หากยังไม่มีบ่อที่เลือกล่าสุด ให้เลือกบ่อแรก
+      if (!selectedPond) {
+        selectedPond = ponds[0];
+      }
+
+      const pondId =
+        selectedPond.id ?? selectedPond.pondNumber;
+
+      // บันทึกบ่อที่เลือก
+      localStorage.setItem(
+        "farmExpenseSelectedPond",
+        String(pondId)
+      );
+
+      // เดือนปัจจุบัน
+      const now = new Date();
+
+      const month =
+        now.getFullYear() +
+        "-" +
+        String(now.getMonth() + 1).padStart(2, "0");
+
+      // เปิดหน้าสรุปผลหรือ AI
+      const url = new URL(
+        page + ".html",
+        window.location.href
+      );
+
+      url.searchParams.set("pond", pondId);
+      url.searchParams.set("month", month);
+
+      location.href = url.href;
+    }
+  </script>
+</body>
 </html>

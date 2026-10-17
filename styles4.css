@@ -30,36 +30,88 @@ button {
   touch-action: manipulation;
 }
 
+
+/* ===== APP PAGE : 3 BACKGROUND LAYERS ===== */
+
 .app-page {
   position: relative;
   isolation: isolate;
+
   width: 100%;
   max-width: 412px;
+
   height: 100vh;
   height: 100dvh;
+  min-height: 0;
+
   margin: 0 auto;
   overflow: hidden;
   border-radius: 0;
 
-  background: #dff7f7 url("./Backgroud2.jpg") center / 100% 100% no-repeat;
+  /* พื้นหลัง 3 ชั้น เหมือน index3.html */
+  background-image:
+    url("./งื้อสวยจริงๆ.png"),
+    url("./ปะการัง.png"),
+    url("./Backgroud2.jpg");
 
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%;
+
+  background-position:
+    center center,
+    center bottom,
+    center center;
+
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat;
+
+  background-color: #dff7f7;
   box-shadow: none;
 }
 
+
+
+/* ===== MY FARM HEADER ===== */
+
 .list-header {
   position: absolute;
-  top: env(safe-area-inset-top);
+
+  top: max(0px, env(safe-area-inset-top));
   left: 0;
   right: 0;
-  height: 160px;
+
+  height: 155px;
 
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 8px 12px;
+  justify-content: center;
+
+  padding: 10px 14px;
   text-align: center;
+
   z-index: 2;
 }
+
+/* รูป My Farm.png */
+.list-header-image {
+  display: block;
+
+  width: 100%;
+  max-width: 390px;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center;
+
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 
 .list-header h1 {
   margin: 0;
@@ -407,5 +459,171 @@ button:active {
     width: 25px;
     height: 25px;
     font-size: 18px;
+  }
+}
+
+/* =====================================
+   FLOATING BUBBLES ANIMATION
+   ===================================== */
+
+.bubbles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -60px;
+
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.13);
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+
+  box-shadow:
+    inset -3px -3px 7px rgba(255, 255, 255, 0.12),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.35),
+    0 0 5px rgba(255, 255, 255, 0.15);
+
+  animation: bubble-rise 12s linear infinite;
+}
+
+/* ฟองที่ 1 */
+.bubble:nth-child(1) {
+  left: 8%;
+  width: 14px;
+  height: 14px;
+  animation-duration: 11s;
+  animation-delay: -2s;
+}
+
+/* ฟองที่ 2 */
+.bubble:nth-child(2) {
+  left: 20%;
+  width: 24px;
+  height: 24px;
+  animation-duration: 14s;
+  animation-delay: -7s;
+}
+
+/* ฟองที่ 3 */
+.bubble:nth-child(3) {
+  left: 32%;
+  width: 12px;
+  height: 12px;
+  animation-duration: 10s;
+  animation-delay: -4s;
+}
+
+/* ฟองที่ 4 */
+.bubble:nth-child(4) {
+  left: 44%;
+  width: 19px;
+  height: 19px;
+  animation-duration: 13s;
+  animation-delay: -9s;
+}
+
+/* ฟองที่ 5 */
+.bubble:nth-child(5) {
+  left: 55%;
+  width: 10px;
+  height: 10px;
+  animation-duration: 9s;
+  animation-delay: -3s;
+}
+
+/* ฟองที่ 6 */
+.bubble:nth-child(6) {
+  left: 66%;
+  width: 26px;
+  height: 26px;
+  animation-duration: 16s;
+  animation-delay: -11s;
+}
+
+/* ฟองที่ 7 */
+.bubble:nth-child(7) {
+  left: 77%;
+  width: 15px;
+  height: 15px;
+  animation-duration: 12s;
+  animation-delay: -5s;
+}
+
+/* ฟองที่ 8 */
+.bubble:nth-child(8) {
+  left: 88%;
+  width: 21px;
+  height: 21px;
+  animation-duration: 15s;
+  animation-delay: -8s;
+}
+
+/* ฟองที่ 9 */
+.bubble:nth-child(9) {
+  left: 15%;
+  width: 9px;
+  height: 9px;
+  animation-duration: 10s;
+  animation-delay: -6s;
+}
+
+/* ฟองที่ 10 */
+.bubble:nth-child(10) {
+  left: 72%;
+  width: 17px;
+  height: 17px;
+  animation-duration: 13s;
+  animation-delay: -1s;
+}
+
+/* เคลื่อนไหวจากล่างขึ้นบน */
+@keyframes bubble-rise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.7);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translate3d(12px, -55vh, 0) scale(1);
+    opacity: 0.7;
+  }
+
+  90% {
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translate3d(-8px, -110vh, 0) scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* ให้เนื้อหาอยู่เหนือฟองสบู่ */
+.welcome-header,
+.welcome-content,
+.page-header,
+.pond-form {
+  z-index: 2;
+}
+
+/* รองรับผู้ใช้ที่ปิดแอนิเมชัน */
+@media (prefers-reduced-motion: reduce) {
+  .bubble {
+    animation: none;
+    opacity: 0.25;
   }
 }
