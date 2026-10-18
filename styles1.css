@@ -450,3 +450,65 @@ body {
     transition: none;
   }
 }
+
+
+/* ===== MEMBERS ICON ONLY ===== */
+
+.page-container .members-button {
+  position: absolute;
+  right: 10px;
+  bottom: calc(5px + env(safe-area-inset-bottom));
+
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+
+  padding: 0;
+  overflow: visible;
+
+  z-index: 999;
+  text-decoration: none;
+
+  transition: transform 0.2s ease;
+}
+
+.page-container .members-icon {
+  display: block;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+/* เมื่อเอาเมาส์ชี้ */
+.page-container .members-button:hover {
+  transform: scale(1.12);
+}
+
+/* เมื่อกด */
+.page-container .members-button:active {
+  transform: scale(0.95);
+}
+
+/* หน้าจอเล็ก */
+@media (max-width: 375px) {
+  .page-container .members-button {
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    width: 60px;
+    height: 60px;
+  }
+
+  .page-container .members-icon {
+    width: 52px;
+    height: 52px;
+  }
+}
+
